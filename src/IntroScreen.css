@@ -1,0 +1,101 @@
+@font-face {
+  font-family: 'Mojangle';
+  src: url('./fonts/mojangle.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Mojangle', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+
+  background-image: url('sprites/bg.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+}
+
+.intro-screen {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.intro-screen h1 {
+  font-size: 72px;
+  letter-spacing: 4px;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin-bottom: 10px;
+}
+
+.intro-screen p {
+  font-size: 1.2rem;
+  color: #fdfdfd;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  margin: 10px 0;
+}
+
+.intro-screen button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #b5975e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 50px;
+  width: fit-content;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.intro-screen button:hover {
+  background-color: #acd283;
+  transform: scale(1.05);
+}
+
+.creds {
+  margin-top: 60px;
+}
+
+.creds img {
+  pointer-events: none;
+  width: fit-content;
+  height: 60px;
+}
+
+.creds .subtitle {
+  font-size: 14px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.creds a {
+  color: #956610;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  position: relative;
+}
+
+.creds a:hover {
+  color: rgb(175, 236, 149);
+}
+
+.title,
+.subtitle,
+.intro-screen h1,
+.intro-screen p,
+.intro-screen button {
+  font-family: 'Mojangle', sans-serif;
+}
