@@ -26,6 +26,7 @@ function StackVisualizer({ selectedSprite }) {
   // for level 2
   const [userInput, setUserInput] = useState('');
   const [inputConfirmed, setInputConfirmed] = useState(false);
+  const [inputSoFar, setInputSoFar] = useState('');
 
   const popSound = new Audio('./sounds/pop.mp3');
   const pushSound = new Audio('./sounds/push.mp3');
@@ -83,8 +84,33 @@ function StackVisualizer({ selectedSprite }) {
 
   const lvl2Stacks = {
     q0: (stack) => stack.length === 1 && stack[0] === 'z0', // start state
-    q1: (stack) => stack.length > 1 && stack.includes('z0'), // pushing half the string
-    q2: (stack) => stack.length > 1 && stack.includes('z0'), // during popping
+    q1: (stack, userInput) => {
+      if (!stack.includes("z0")) return false;
+
+      const firstHalf = userInput.slice(0, Math.floor(userInput.length / 2));
+      const pushedPart = stack.slice(1); // ignore z0
+
+      if (pushedPart.length !== firstHalf.length) return false;
+
+      for (let i = 0; i < firstHalf.length; i++) {
+        if (pushedPart[i] !== firstHalf[i]) return false;
+      }
+
+      return true;
+    },
+    q2: (stack) => {
+      // popping and comparing stack top w/ remaining unpushed input string chars
+      const midLength = Math.floor(userInput.length / 2); // mid point of string
+      const remainingInput = userInput.slice(midLength); // get second half of string
+
+      // q2 -> popping from the stack and comparing
+      if (stack.length > 1 && stack[stack.length - 1] === remainingInput[remainingInput.length - 1]) {
+        stack.pop(); // pop the top character from the stack
+        return true;
+      }
+
+      return false; // invalid transition (either chars don't match or stack too small)
+  },
     q3: (stack) => stack.length === 1 && stack[0] === 'z0' // success if only z0 remains
   };
 
@@ -96,6 +122,10 @@ function StackVisualizer({ selectedSprite }) {
     pushSound.play();
     pushSound.volume = 0.5;
     setStack((prevStack) => [...prevStack, symbol]);
+
+    if (level === 2 && inputConfirmed) {
+      setInputSoFar((prev) => prev + symbol);
+    }
   };
 
   const handlePop = () => {
@@ -114,7 +144,18 @@ function StackVisualizer({ selectedSprite }) {
     if (level === 1 && lvl1Stacks[currentState]) {
       isValid = lvl1Stacks[currentState](stack);
     } else if (level === 2 && lvl2Stacks[currentState]) {
-      isValid = lvl2Stacks[currentState](stack);
+      let arg = null;
+
+      if (currentState == 'q1') {
+        arg = inputSoFar;
+      } else if (currentState === 'q2') {
+        // q2 -> pass only the current character being checked against the stack
+        const firstHalfLength = Math.floor(inputSoFar.length / 2);
+        const indexInSecondHalf = stack.length - 2; // because z0 is at bottom, and top of stack is last pushed
+        arg = inputSoFar[firstHalfLength + indexInSecondHalf];
+      }
+
+      isValid = lvl2Stacks[currentState](stack, arg, userInput);
     }
 
     setIsStackValid(isValid);
