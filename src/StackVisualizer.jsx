@@ -7,17 +7,25 @@ import L2Img from './sprites/levels/level2.png'
 import './StackVisualizer.css';
 
 function StackVisualizer({ selectedSprite }) {
-  const [showLevelInfo, setShowLevelInfo] = useState(false);
   const [level, setLevel] = useState(1); // starting at level 1
   const [stack, setStack] = useState([]);
   const [hasStarted, setHasStarted] = useState(false);
-  const [time, setTime] = useState(0); // time tracking for each level
   const [currentState, setCurrentState] = useState('q0');
+  const [isStackValid, setIsStackValid] = useState(false);
+
+  // for level-state functionality
+  const [showLevelInfo, setShowLevelInfo] = useState(false);
   const [currentLevelImage, setCurrentLevelImage] = useState(L1Img); // FSD for 1st level
   const [canProceedToNextLevel, setCanProceedToNextLevel] = useState(false);
-  const [isStackValid, setIsStackValid] = useState(false);
   const [hasCompletedLevel, setHasCompletedLevel] = useState(false);
+
+  // time tracking for each level
+  const [time, setTime] = useState(0);
   const timerRef = useRef(null);
+
+  // for level 2
+  const [userInput, setUserInput] = useState('');
+  const [inputConfirmed, setInputConfirmed] = useState(false);
 
   useEffect(() => {
     timerRef.current = null;
@@ -138,7 +146,7 @@ function StackVisualizer({ selectedSprite }) {
     //     setCurrentLevelImage(level2Images['q0']); // set first image of level 2 (state q0)
     //   }
     // }, 0); // slight delay to ensure that state change is complete b4 setting img
-    
+
     // ensure timer doesn't reset
     if (!hasCompletedLevel) {
       setHasStarted(true); // keep timer running from its current position
@@ -172,9 +180,37 @@ function StackVisualizer({ selectedSprite }) {
         {showLevelInfo && !hasCompletedLevel && (
           <>
             <h2>
-              Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^n'}
+              Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^+'}
             </h2>
-            <img src={currentLevelImage} alt="current level" />
+            {level === 1 && <img src={currentLevelImage} alt="current level" />}
+
+            {/* Insert input prompt for Level 2 */}
+            {level === 2 && !inputConfirmed && (
+              <div className="input-prompt">
+                <h3>enter a string (a + b)^+ to validate wwʳ:</h3>
+                <div className="input-area">
+                  <input
+                    type="text"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    placeholder="e.g. abba"
+                  />
+                  <button
+                    onClick={() => {
+                      if (userInput.length % 2 === 0 && /^[ab]+$/.test(userInput)) {
+                        setInputConfirmed(true);
+                        alert("✅ valid input confirmed! simulate wwʳ");
+                      } else {
+                        alert("❌ input must be even-length and contain only a/b");
+                      }
+                    }}
+                  >
+                    confirm
+                  </button>
+                </div>
+              </div>
+            )}
+            {level === 2 && inputConfirmed && <img src={currentLevelImage} alt="current level" />}
           </>
         )}
 
@@ -209,12 +245,21 @@ function StackVisualizer({ selectedSprite }) {
             </button>
           ) : (
             <div className="button-row">
-              <button onClick={() => handlePush('0')}>push '0'</button>
+              {level === 1 && (
+                <button onClick={() => handlePush('0')}>push '0'</button>
+              )}
+              {level === 2 && (
+                <>
+                  <button onClick={() => handlePush('a')}>push 'a'</button>
+                  <button onClick={() => handlePush('b')}>push 'b'</button>
+                </>
+              )}
               <button onClick={handlePop}>pop</button>
               <button onClick={handleTransition}>transition</button>
             </div>
           )
         )}
+
       </div>
     </div>
   );
