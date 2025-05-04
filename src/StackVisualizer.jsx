@@ -59,14 +59,21 @@ function StackVisualizer({ selectedSprite }) {
     q3: (stack) => stack.length === 1 && stack[0] === 'z0' // stack empty -> only z0 present
   };
 
-  const lvl2Stacks = { // L = { ww^R | w = (a + b)^+ }, all even-length palindromes - no empty strings
-    q0: (stack) => stack.length === 1 && stack[0] === 'z0', // initial state, z0 *must* be present always
-    q1: (stack) => stack.length > 1 && stack[0] === 'z0' && stack.slice(1).every( ch => ch === 'a' || ch === 'b'), // put any number of a's or b's
-    q2: (stack, inputSymbol) => {
-      const top = stack[stack.length - 1];
-      return top === inputSymbol; // curr symbol matches top of stack?
-    },
-    q3: (stack) => stack.length === 1 && stack[0] === 'z0' // stack empty -> only z0 present
+  // const lvl2Stacks = { // L = { ww^R | w = (a + b)^+ }, all even-length palindromes - no empty strings
+  //   q0: (stack) => stack.length === 1 && stack[0] === 'z0', // initial state, z0 *must* be present always
+  //   q1: (stack) => stack.length > 1 && stack[0] === 'z0' && stack.slice(1).every( ch => ch === 'a' || ch === 'b'), // put any number of a's or b's
+  //   q2: (stack, inputSymbol) => {
+  //     const top = stack[stack.length - 1];
+  //     return top === inputSymbol; // curr symbol matches top of stack?
+  //   },
+  //   q3: (stack) => stack.length === 1 && stack[0] === 'z0' // stack empty -> only z0 present
+  // };
+
+  const lvl2Stacks = {
+    q0: (stack) => stack.length === 1 && stack[0] === 'z0', // start state
+    q1: (stack) => stack.length > 1 && stack.includes('z0'), // pushing half the string
+    q2: (stack) => stack.length > 1 && stack.includes('z0'), // during popping
+    q3: (stack) => stack.length === 1 && stack[0] === 'z0' // success if only z0 remains
   };
 
   /* const lvl3Stacks = {
