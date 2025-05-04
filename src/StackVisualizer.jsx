@@ -91,8 +91,7 @@ function StackVisualizer({ selectedSprite }) {
 
   const restartLevel = () => {
     setHasStarted(false); // reset start flag
-    // setInputString('');   // clear input
-    setStack([]);         // clear stack
+    setStack(['z0']);     // only 'z0' on stack initially
     setTime(0);           // reset timer
     setCurrentState('q0');
     setCanProceedToNextLevel(false);
@@ -127,7 +126,7 @@ function StackVisualizer({ selectedSprite }) {
       <div className="middle-panel">
         {!showLevelInfo && (
           <div className="center-button">
-            <button onClick={() => { setShowLevelInfo(true); setHasStarted(true); }}>
+            <button onClick={() => { setShowLevelInfo(true); setHasStarted(true); setStack(['z0']) }}>
               {'[ round start ]'}
             </button>
           </div>
