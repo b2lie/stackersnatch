@@ -74,39 +74,39 @@ function StackVisualizer({ selectedSprite }) {
 
     setIsStackValid(isValid);
     if (isValid) { // player is moved to the next state + lvl img updated
-      const nextState = `q${parseInt(currentState[1]) + 1}`; // generate the next state to go to - extracts the digit 'n' in string "qn"
-      setCurrentState(nextState);
+      if (currentState === 'q3') {
+        setCanProceedToNextLevel(true);
+      } else {
+        const nextState = `q${parseInt(currentState[1]) + 1}`; // generate the next state to go to - extracts the digit 'n' in string "qn"
+        setCurrentState(nextState);
 
-      if (level === 1) {
-        setCurrentLevelImage(level1Images[nextState]);
-      }
+        if (level === 1) {
+          setCurrentLevelImage(level1Images[nextState]);
+        }
 
-      if (level === 2) {
-        setCurrentLevelImage(level2Images[nextState]);
+        if (level === 2) {
+          setCurrentLevelImage(level2Images[nextState]);
+        }
       }
     } else {
-      alert('⛔ invalid stack for this state!');
+      alert('⛔ invalid stack for this state :T pls retry');
     }
   };
 
-  const restartLevel = () => {
-    setHasStarted(false); // reset start flag
+  const startRound = () => {
+    setShowLevelInfo(true);
+    setHasStarted(true);
+    setStack(['z0']);
+    setCurrentLevelImage(level1Images['q0']);
+  }
+
+  const handleNextLevel = () => {
+    setHasStarted(true);  // level already started
     setStack(['z0']);     // only 'z0' on stack initially
-    setTime(0);           // reset timer
     setCurrentState('q0');
-    setCanProceedToNextLevel(false);
-  }
-
-  const handleExit = () => {
-
-  }
-
-  // const handleNextLevel = () => {
-  //   if (result === 'Correct!') {
-  //     setLevel((lvl) => lvl + 1);
-  //     restartLevel();
-  //   }
-  // };
+    setCanProceedToNextLevel(true);
+    setLevel(level + 1);
+  };
 
   return (
     <div className="stack-visualizer">
@@ -126,7 +126,7 @@ function StackVisualizer({ selectedSprite }) {
       <div className="middle-panel">
         {!showLevelInfo && (
           <div className="center-button">
-            <button onClick={() => { setShowLevelInfo(true); setHasStarted(true); setStack(['z0']) }}>
+            <button onClick={() => startRound()}>
               {'[ round start ]'}
             </button>
           </div>
@@ -139,12 +139,6 @@ function StackVisualizer({ selectedSprite }) {
             </h2>
             <img src={currentLevelImage} alt="current level" />
           </>
-        )}
-
-        {canProceedToNextLevel && (
-          <button>
-            next level
-          </button>
         )}
 
         {/* display state we're at currently */}
@@ -171,11 +165,19 @@ function StackVisualizer({ selectedSprite }) {
           )}
         </div>
         {/* stack interaction buttons */}
-        <div className="button-row">
-          <button onClick={() => handlePush('0')}>push '0'</button>
-          <button onClick={handlePop}>pop</button>
-          <button onClick={handleTransition}>transition</button>
-        </div>
+        {currentState === 'q3' ? (
+          canProceedToNextLevel ? (
+            <button onClick={handleNextLevel}>
+              next level
+            </button>
+          ) : null
+        ) : (
+          <div className="button-row">
+            <button onClick={() => handlePush('0')}>push '0'</button>
+            <button onClick={handlePop}>pop</button>
+            <button onClick={handleTransition}>transition</button>
+          </div>
+        )}
       </div>
     </div>
   );
