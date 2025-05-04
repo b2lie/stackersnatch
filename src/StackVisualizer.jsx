@@ -35,13 +35,10 @@ function StackVisualizer({ selectedSprite }) {
   const pushSound = new Audio('./sounds/push.mp3');
   const jumpSound = new Audio('./sounds/jump.mp3');
 
-<<<<<<< HEAD
-=======
   const handleWin = () => {
     setHasWon(true);
   };
 
->>>>>>> 3ddc2f2 (added win page + return home button)
   useEffect(() => {
     timerRef.current = null;
 
@@ -109,11 +106,6 @@ function StackVisualizer({ selectedSprite }) {
         return true;
       }
 
-<<<<<<< HEAD
-      return false; // invalid transition (either chars don't match or stack too small)
-  },
-    q3: (stack) => stack.length === 1 && stack[0] === 'z0' // success if only z0 remains
-=======
       const expectedChar = secondHalf[popIndex];
 
       console.log("popped:", poppedChar);
@@ -142,7 +134,6 @@ function StackVisualizer({ selectedSprite }) {
         handleWin();
       }
     }
->>>>>>> 3ddc2f2 (added win page + return home button)
   };
 
   /* const lvl3Stacks = {
@@ -163,9 +154,6 @@ function StackVisualizer({ selectedSprite }) {
     popSound.play();
     popSound.volume = 0.5;
     if (stack.length > 1) { // prevent popping 'z0'
-<<<<<<< HEAD
-      setStack((prevStack) => prevStack.slice(0, -1));
-=======
       const newStack = [...stack];
       const popped = newStack.pop();
       setPoppedChar(popped);
@@ -174,7 +162,6 @@ function StackVisualizer({ selectedSprite }) {
 
     } else {
       alert("⚠ can't pop z0 !");
->>>>>>> 3ddc2f2 (added win page + return home button)
     }
   };
 
@@ -222,9 +209,6 @@ function StackVisualizer({ selectedSprite }) {
   }
 
   const handleNextLevel = () => {
-<<<<<<< HEAD
-    setLevel(prev => prev + 1);
-=======
     if (level >= 2) {
       handleWin();
       // navigate('/win');
@@ -234,7 +218,6 @@ function StackVisualizer({ selectedSprite }) {
     const nextLevel = level + 1;
     setLevel(nextLevel);
 
->>>>>>> 3ddc2f2 (added win page + return home button)
     setShowLevelInfo(true);
     setStack(['z0']);
     setCurrentState('q0');
@@ -346,12 +329,6 @@ function StackVisualizer({ selectedSprite }) {
                 ))
               )}
             </div>
-<<<<<<< HEAD
-          )
-        )}
-
-      </div>
-=======
             {/* stack interaction buttons */}
             {showLevelInfo && (
               currentState === 'q3' && isStackValid ? (
@@ -378,7 +355,6 @@ function StackVisualizer({ selectedSprite }) {
           </div>
         </>
       )};
->>>>>>> 3ddc2f2 (added win page + return home button)
     </div>
   );
 }
