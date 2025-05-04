@@ -27,6 +27,10 @@ function StackVisualizer({ selectedSprite }) {
   const [userInput, setUserInput] = useState('');
   const [inputConfirmed, setInputConfirmed] = useState(false);
 
+  const popSound = new Audio('./sounds/pop.mp3');
+  const pushSound = new Audio('./sounds/push.mp3');
+  const jumpSound = new Audio('./sounds/jump.mp3');
+
   useEffect(() => {
     timerRef.current = null;
 
@@ -89,16 +93,22 @@ function StackVisualizer({ selectedSprite }) {
   }; */
 
   const handlePush = (symbol) => {
+    pushSound.play();
+    pushSound.volume = 0.5;
     setStack((prevStack) => [...prevStack, symbol]);
   };
 
   const handlePop = () => {
+    popSound.play();
+    popSound.volume = 0.5;
     if (stack.length > 1) { // prevent popping 'z0'
       setStack((prevStack) => prevStack.slice(0, -1));
     }
   };
 
   const handleTransition = () => {
+    jumpSound.play();
+    jumpSound.volume = 0.5;
     let isValid = false; // assuming current stack is invalid
 
     if (level === 1 && lvl1Stacks[currentState]) {
