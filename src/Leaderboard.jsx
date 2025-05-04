@@ -1,37 +1,28 @@
-import React from 'react';
-import Leaderboard from './Leaderboard'
-import './WinPage.css';
+import React, { useState, useEffect } from 'react';
+import './Leaderboard.css';
 
-const closeSound = new Audio('./sounds/close.mp3');
+function Leaderboard() {
+  const [leaderboard, setLeaderboard] = useState([]);
 
-const playCloseSound = () => {
-  closeSound.currentTime = 0;
-  closeSound.volume = 0.2;
-  closeSound.play();
-};
+  useEffect(() => {
+    const storedLeaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    // Sort entries by score in descending order
+    storedLeaderboard.sort((a, b) => b.score - a.score);
+    setLeaderboard(storedLeaderboard);
+  }, []);
 
-const viewLeaderboard = () => {
-  <Leaderboard />
-}
-
-const goHome = () => {
-  playCloseSound();
-  setTimeout(() => {
-    window.location.href = '/'; // reload the page + go back to home
-  }, 700); // wait 0.7s
-}
-
-function WinPage() {
   return (
-    <div className="middle-pane">
-      <img src={require('./sprites/win.gif')} alt="Win!" />
-      <div>
-        <h1>You Win!</h1>
-        <button onClick={viewLeaderboard}>view leaderboard</button>
-        <button onClick={goHome}>return home</button>
-      </div>
+    <div className="leaderboard">
+      <h1>leaderboard</h1>
+      <ul>
+        {leaderboard.map((entry, index) => (
+          <li key={index}>
+            &lt; {entry.name} &gt; - {entry.score} points
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default WinPage;
+export default Leaderboard;

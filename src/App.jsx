@@ -3,11 +3,14 @@ import IntroScreen from './IntroScreen';
 import StackVisualizer from './StackVisualizer';
 import PlayerSelect from './PlayerSelect';
 import RulesPage from './RulesPage';
+import Leaderboard from './Leaderboard';
+import WinPage from './WinPage';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState('intro');
   const [selectedSprite, setSelectedSprite] = useState(null);
   const [isFading, setIsFading] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   // nav funcs
   const fadeToScreen = (screenName) => {
@@ -16,6 +19,14 @@ function App() {
       setCurrentScreen(screenName);
       setIsFading(false);
     }, 500); // fade for half a second
+  };
+
+  const handleViewLeaderboard = () => {
+    setShowLeaderboard(true);
+  };
+
+  const handleGoHome = () => {
+    setShowLeaderboard(false);
   };
 
   const handleStart = () => {
@@ -37,20 +48,26 @@ function App() {
 
   return (
     <div className={`app-container ${isFading ? 'fade-out' : ''}`}>
-      {currentScreen === 'intro' && (
-        <IntroScreen onStart={handleStart} onChoosePlayer={handlePlayerSelect} onShowRules={handleRulesDisplay} />
-      )}
-      {currentScreen === 'playerSelect' && (
-        <PlayerSelect onSelect={handleSpriteSelect} />
-      )}
-      {currentScreen === 'pdaSimulator' && (
-        <StackVisualizer selectedSprite={selectedSprite} />
-      )}
-      {currentScreen === 'displayRules' && (
-        <RulesPage onShowRules={handleRulesDisplay} />
+      {showLeaderboard ? (
+        <Leaderboard onGoHome={handleGoHome} />
+      ) : (
+        <>
+          {currentScreen === 'intro' && (
+            <IntroScreen onStart={handleStart} onChoosePlayer={handlePlayerSelect} onShowRules={handleRulesDisplay} />
+          )}
+          {currentScreen === 'playerSelect' && (
+            <PlayerSelect onSelect={handleSpriteSelect} />
+          )}
+          {currentScreen === 'pdaSimulator' && (
+            <StackVisualizer selectedSprite={selectedSprite} />
+          )}
+          {currentScreen === 'displayRules' && (
+            <RulesPage onShowRules={handleRulesDisplay} />
+          )}
+          <WinPage onViewLeaderboard={handleViewLeaderboard} />
+        </>
       )}
     </div>
-
   );
 }
 

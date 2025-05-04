@@ -1,6 +1,6 @@
 .middle-pane {
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* Keep the elements stacked vertically */
     justify-content: center;
     align-items: center;
     height: 70vh;
@@ -12,12 +12,12 @@
 
 .middle-pane > img {
     width: 25vw;
-    margin-right: 150px;
+    margin-bottom: 20px; /* Add some space below the image */
 }
 
 .middle-pane > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* vertical h1 and leaderboard */
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -26,4 +26,16 @@
 h1 {
     color: rgb(131, 88, 50);
     margin-bottom: 20px;
+}
+
+.button-row {
+    gap: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
 }

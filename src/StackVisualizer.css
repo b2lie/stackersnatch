@@ -176,6 +176,10 @@ button:hover {
     transition: all 0.3s ease;
 }
 
+.points {
+    font-size: small;
+}
+
 .stack-visualizer,
 .left-panel,
 .middle-panel,

@@ -20,16 +20,19 @@ function StackVisualizer({ selectedSprite }) {
   const [canProceedToNextLevel, setCanProceedToNextLevel] = useState(false);
   const [hasCompletedLevel, setHasCompletedLevel] = useState(false);
 
-  const [hasWon, setHasWon] = useState(false);
-
   // time tracking for each level
   const [time, setTime] = useState(0);
+  const [points, setPoints] = useState(0);
   const timerRef = useRef(null);
 
   // for level 2
   const [userInput, setUserInput] = useState('');
   const [inputConfirmed, setInputConfirmed] = useState(false);
   const [inputSoFar, setInputSoFar] = useState('');
+  const [poppedChar, setPoppedChar] = useState(null);
+  const [popIndex, setPopIndex] = useState(0); // popping and comparing values
+
+  const [hasWon, setHasWon] = useState(false);
 
   const popSound = new Audio('./sounds/pop.mp3');
   const pushSound = new Audio('./sounds/push.mp3');
@@ -37,7 +40,18 @@ function StackVisualizer({ selectedSprite }) {
 
   const handleWin = () => {
     setHasWon(true);
+    calculatePoints();
   };
+
+  useEffect(() => {
+    console.log('updated points:', points); // log updated points
+  }, [points]);
+
+  useEffect(() => {
+    if (hasWon) {
+      console.log('final points:', points);
+    }
+  }, [hasWon]);
 
   useEffect(() => {
     timerRef.current = null;
@@ -51,6 +65,7 @@ function StackVisualizer({ selectedSprite }) {
     }
 
     return () => clearInterval(timerRef.current);
+
   }, [hasStarted, currentState, isStackValid]); // dependency array -> code block rerun if any of these change
 
   useEffect(() => {
@@ -66,8 +81,10 @@ function StackVisualizer({ selectedSprite }) {
   useEffect(() => {
     // level-dependent; use current state to get lvl image
     if (level === 1) {
+      calculatePoints();
       setCurrentLevelImage(level1Images[currentState]);
     } else if (level === 2) {
+      calculatePoints();
       setCurrentLevelImage(level2Images[currentState]);
     }
   }, [level, currentState]);
@@ -84,26 +101,31 @@ function StackVisualizer({ selectedSprite }) {
     q1: (stack, userInput) => {
       if (!stack.includes("z0")) return false;
 
-      const firstHalf = userInput.slice(0, Math.floor(userInput.length / 2));
-      const pushedPart = stack.slice(1); // ignore z0
+      const firstHalf = userInput.slice(0, (userInput.length / 2) + 1); // string sliced upto & including the mid char
+      const stackString = stack.slice(1).join(""); // join stack elements to form a string, excluding z0
 
-      if (pushedPart.length !== firstHalf.length) return false;
+      console.log("first half:", firstHalf);
+      console.log("stack string:", stackString);
 
-      for (let i = 0; i < firstHalf.length; i++) {
-        if (pushedPart[i] !== firstHalf[i]) return false;
-      }
+      // compare the string from the stack with the first half of the input string
+      if (stackString !== firstHalf) return false;
+
+      setPopIndex(0); // for q1 -> q2 transitioning
 
       return true;
     },
-    q2: (stack) => {
-      // popping and comparing stack top w/ remaining unpushed input string chars
-      const midLength = Math.floor(userInput.length / 2); // mid point of string
-      const remainingInput = userInput.slice(midLength); // get second half of string
+    q2: (stack, poppedChar, userInput, popIndex) => {
+      const midLength = Math.floor(userInput.length / 2);
+      const secondHalf = userInput.slice(midLength).split(''); // second half of input
 
-      // q2 -> popping from the stack and comparing
-      if (stack.length > 1 && stack[stack.length - 1] === remainingInput[remainingInput.length - 1]) {
-        stack.pop(); // pop the top character from the stack
-        return true;
+      console.log("second half:", secondHalf); // supposed reversed part
+      console.log("current pop index:", popIndex);
+
+      // stop if we've popped everything we need
+      if (popIndex >= secondHalf.length || stack.length <= 1) {
+        console.log("all chars popped or not enough in stack.");
+        if (stack.length === 1 && stack[0] === 'z0') return true; // only z0 remains on transition
+        return false;
       }
 
       const expectedChar = secondHalf[popIndex];
@@ -134,20 +156,35 @@ function StackVisualizer({ selectedSprite }) {
         handleWin();
       }
     }
+
   };
 
   /* const lvl3Stacks = {
-
+  
   }; */
+
+  const calculatePoints = () => {
+    const maxTime = 60; // max time for this level
+    const timeScore = Math.max(0, maxTime - time); // inverting time (faster = more points)
+    const basePoints = 100; // base points for completing level
+
+    // deduct points based on no. of invalid moves or alerts
+    const pointsFromTime = Math.floor(timeScore);
+    const finalPoints = basePoints + pointsFromTime;
+
+    setPoints(finalPoints);
+  };
 
   const handlePush = (symbol) => {
     pushSound.play();
     pushSound.volume = 0.5;
     setStack((prevStack) => [...prevStack, symbol]);
 
+
     if (level === 2 && inputConfirmed) {
       setInputSoFar((prev) => prev + symbol);
     }
+
   };
 
   const handlePop = () => {
@@ -168,6 +205,7 @@ function StackVisualizer({ selectedSprite }) {
   const handleTransition = () => {
     jumpSound.play();
     jumpSound.volume = 0.5;
+
     let isValid = false; // assuming current stack is invalid
 
     if (level === 1 && lvl1Stacks[currentState]) {
@@ -177,14 +215,22 @@ function StackVisualizer({ selectedSprite }) {
 
       if (currentState == 'q1') {
         arg = inputSoFar;
+        isValid = lvl2Stacks.q1(stack, arg);
       } else if (currentState === 'q2') {
-        // q2 -> pass only the current character being checked against the stack
-        const firstHalfLength = Math.floor(inputSoFar.length / 2);
-        const indexInSecondHalf = stack.length - 2; // because z0 is at bottom, and top of stack is last pushed
-        arg = inputSoFar[firstHalfLength + indexInSecondHalf];
-      }
+        if (!poppedChar) {
+          alert("🤚🏻 please pop something first !");
+          return;
+        }
 
-      isValid = lvl2Stacks[currentState](stack, arg, userInput);
+        arg = poppedChar;
+        isValid = lvl2Stacks.q2(stack, arg, userInput, popIndex);
+
+        // // q2 -> pass only the current character being checked against the stack
+        // const firstHalfLength = Math.floor(inputSoFar.length / 2);
+        // const indexInSecondHalf = stack.length - 2; // because z0 is at bottom, and top of stack is last pushed
+        // arg = inputSoFar[firstHalfLength + indexInSecondHalf];
+      }
+      isValid = lvl2Stacks[currentState](stack, arg, userInput, popIndex);
     }
 
     setIsStackValid(isValid);
@@ -196,9 +242,12 @@ function StackVisualizer({ selectedSprite }) {
         setCurrentState(nextState);
         // image updation handled by userEffect() function
       }
+    } else if (isValid && currentState === 'q2') {
+      setPopIndex(prev => prev + 1);
     } else {
       alert('⛔ invalid stack for this state :T pls retry');
     }
+
   };
 
   const startRound = () => {
@@ -239,123 +288,121 @@ function StackVisualizer({ selectedSprite }) {
     if (!hasCompletedLevel) {
       setHasStarted(true); // keep timer running from its current position
     }
+
   };
 
-  return (
-    <div className="stack-visualizer">
-      {hasWon ? (
-        <WinPage />
-      ) : (
-        <>
-          {/* timer + points panel */}
-          <div className="left-panel">
-            <h2>timer: {time}s</h2>
-            <img
-              src={selectedSprite?.img || '/chars/char1.png'}
-              alt="player"
-              style={{ width: '100px', height: '100px', marginTop: '10px' }}
-            />
-            <p>&gt;  {selectedSprite?.name || 'charlie'}  &lt;</p> <br />
-            <a className="exit" href="/">exit</a>
-          </div>
+  return (<div className="stack-visualizer">
+    {hasWon ? (
+      <WinPage />
+    ) : (
+      <>
+        {/* timer + points panel */}
+        < div className="left-panel"> <h2>timer: {time}s</h2>
+          <img
+            src={selectedSprite?.img || '/chars/char1.png'}
+            alt="player"
+            style={{ width: '100px', height: '100px', marginTop: '10px' }}
+          /> <p>&gt;  {selectedSprite?.name || 'charlie'}  &lt;</p> <br /> <a className="exit" href="/">exit</a>
+          <p className="points">points: {points}</p>
+        </div>
 
-          {/* levels panel */}
-          <div className="middle-panel">
-            {!showLevelInfo && (
-              <div className="center-button">
-                <button onClick={() => startRound()}>
-                  {'[ round start ]'}
-                </button>
-              </div>
-            )}
-
-            {showLevelInfo && !hasCompletedLevel && (
-              <>
-                <h2>
-                  Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^+'}
-                </h2>
-                {level === 1 && <img src={currentLevelImage} alt="current level" />}
-
-                {/* Insert input prompt for Level 2 */}
-                {level === 2 && !inputConfirmed && (
-                  <div className="input-prompt">
-                    <h3>enter a string (a + b)^+ to validate wwʳ:</h3>
-                    <div className="input-area">
-                      <input
-                        type="text"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                        placeholder="e.g. abba"
-                      />
-                      <button
-                        onClick={() => {
-                          if (userInput.length % 2 === 0 && /^[ab]+$/.test(userInput)) {
-                            setInputConfirmed(true);
-                            alert("✅ valid input confirmed! simulate wwʳ");
-                          } else {
-                            alert("❌ input must be even-length and contain only a/b");
-                          }
-                        }}
-                      >
-                        confirm
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {level === 2 && inputConfirmed && <img src={currentLevelImage} alt="current level" />}
-              </>
-            )}
-
-            {/* display state we're at currently */}
-            {hasStarted && (
-              <div>
-                <br />
-                <h3>current state: {currentState}</h3>
-              </div>
-            )}
-          </div>
-
-          {/* stack panel */}
-          <div className="right-panel">
-            <h2>the stack</h2>
-            <div className="stack-box">
-              {stack.length === 0 ? (
-                <p>[ empty ]</p>
-              ) : (
-                [...stack].reverse().map((item, index) => ( // pushes items on top of z0
-                  <div key={index} className="stack-item">
-                    {item}
-                  </div>
-                ))
-              )}
+        {/* levels panel */}
+        <div className="middle-panel">
+          {!showLevelInfo && (
+            <div className="center-button">
+              <button onClick={() => startRound()}>
+                {'[ round start ]'}
+              </button>
             </div>
-            {/* stack interaction buttons */}
-            {showLevelInfo && (
-              currentState === 'q3' && isStackValid ? (
-                <button onClick={handleNextLevel}>
-                  next level
-                </button>
-              ) : (
-                <div className="button-row">
-                  {level === 1 && (
-                    <button onClick={() => handlePush('0')}>push '0'</button>
-                  )}
-                  {level === 2 && (
-                    <>
-                      <button onClick={() => handlePush('a')}>push 'a'</button>
-                      <button onClick={() => handlePush('b')}>push 'b'</button>
-                    </>
-                  )}
-                  <button onClick={handlePop}>pop</button>
-                  <button onClick={handleTransition}>transition</button>
-                </div>
-              )
-            )}
+          )}
 
+          {showLevelInfo && !hasCompletedLevel && (
+            <>
+              <h2>
+                Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^+'}
+              </h2>
+              {level === 1 && <img src={currentLevelImage} alt="current level" />}
+
+              {/* Insert input prompt for Level 2 */}
+              {level === 2 && !inputConfirmed && (
+                <div className="input-prompt">
+                  <h3>enter a string (a + b)^+ to validate wwʳ:</h3>
+                  <div className="input-area">
+                    <input
+                      type="text"
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      placeholder="e.g. abba"
+                    />
+                    <button
+                      onClick={() => {
+                        if (userInput.length % 2 === 0 && /^[ab]+$/.test(userInput)) {
+                          setInputConfirmed(true);
+                          alert("✅ valid input confirmed! simulate wwʳ");
+                        } else {
+                          alert("❌ input must be even-length and contain only a/b");
+                        }
+                      }}
+                    >
+                      confirm
+                    </button>
+                  </div>
+                </div>
+              )}
+              {level === 2 && inputConfirmed && <img src={currentLevelImage} alt="current level" />}
+            </>
+          )}
+
+          {/* display state we're at currently */}
+          {hasStarted && (
+            <div>
+              <br />
+              <h3>current state: {currentState}</h3>
+            </div>
+          )}
+        </div>
+
+        {/* stack panel */}
+        <div className="right-panel">
+          <h2>the stack</h2>
+          <div className="stack-box">
+            {stack.length === 0 ? (
+              <p>[ empty ]</p>
+            ) : (
+              [...stack].reverse().map((item, index) => ( // pushes items on top of z0
+                <div key={index} className="stack-item">
+                  {item}
+                </div>
+              ))
+            )}
           </div>
-        </>
-      )};
-    </div>
+          {/* stack interaction buttons */}
+          {showLevelInfo && (
+            currentState === 'q3' && isStackValid ? (
+              <button onClick={handleNextLevel}>
+                next level
+              </button>
+            ) : (
+              <div className="button-row">
+                {level === 1 && (
+                  <button onClick={() => handlePush('0')}>push '0'</button>
+                )}
+                {level === 2 && (
+                  <>
+                    <button onClick={() => handlePush('a')}>push 'a'</button>
+                    <button onClick={() => handlePush('b')}>push 'b'</button>
+                  </>
+                )}
+                <button onClick={handlePop}>pop</button>
+                <button onClick={handleTransition}>transition</button>
+              </div>
+            )
+          )}
+
+        </div>
+      </>
+    )}
+  </div >
   );
 }
 
