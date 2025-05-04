@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { level1Images, level2Images } from './ImageMap';
 import L1Img from './sprites/levels/level1.png'
 import L2Img from './sprites/levels/level2.png'
@@ -14,39 +15,58 @@ function StackVisualizer({ selectedSprite }) {
   const [currentState, setCurrentState] = useState('q0');
   const [currentLevelImage, setCurrentLevelImage] = useState(L1Img); // FSD for 1st level
   const [canProceedToNextLevel, setCanProceedToNextLevel] = useState(false);
-  const [isStackValid, setIsStackValid] = useState(false); // stack validation
+  const [isStackValid, setIsStackValid] = useState(false);
+  const [hasCompletedLevel, setHasCompletedLevel] = useState(false);
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    let interval = null;
+    timerRef.current = null;
 
     if (hasStarted && !(currentState === 'q3' && isStackValid)) { // stop timer when presented w/ expected final stack and allow moving to next lvl
-      interval = setInterval(() => {
+      timerRef.current = setInterval(() => {
         setTime((prevTime) => prevTime + 1);
       }, 1000);
     } else {
-      clearInterval(interval);
+      clearInterval(timerRef.current);
     }
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timerRef.current);
   }, [hasStarted, currentState, isStackValid]); // dependency array -> code block rerun if any of these change
 
   useEffect(() => {
-    if (level === 1) {
-      setCurrentLevelImage(L1Img);
-    } else if (level === 2) {
-      setCurrentLevelImage(L2Img);
+    if (hasStarted && currentState === 'q3' && isStackValid) {
+      clearInterval(timerRef.current);
+      setHasStarted(false);
+      setHasCompletedLevel(true);
+      alert("⏲ timer paused. click 'next level' to resume it.");
     }
-  }, [level]);
+  }, [hasStarted, currentState, isStackValid]);
+
+  // dynamic image updates for each lvl based on current state
+  useEffect(() => {
+    // level-dependent; use current state to get lvl image
+    if (level === 1) {
+      setCurrentLevelImage(level1Images[currentState]);
+    } else if (level === 2) {
+      setCurrentLevelImage(level2Images[currentState]);
+    }
+  }, [level, currentState]);
 
   const lvl1Stacks = { // L = { 0^n 1^n | n >= 0 }
-    q0: (stack) => stack.length === 1 && stack[0] === 'z0', // initial state, z0 *must* be present anyways
+    q0: (stack) => stack.length === 1 && stack[0] === 'z0', // initial state, z0 *must* be present always
     q1: (stack) => stack.every((item) => item === '0' || item === 'z0') && stack.includes('0'), // all 0's pushed
     q2: (stack) => stack.includes('z0') && !stack.includes('0'), // after pushing, check for if stack is just z0 & NO 0's!
     q3: (stack) => stack.length === 1 && stack[0] === 'z0' // stack empty -> only z0 present
   };
 
   const lvl2Stacks = { // L = { ww^R | w = (a + b)^+ }, all even-length palindromes - no empty strings
-
+    q0: (stack) => stack.length === 1 && stack[0] === 'z0', // initial state, z0 *must* be present always
+    q1: (stack) => stack.length > 1 && stack[0] === 'z0' && stack.slice(1).every( ch => ch === 'a' || ch === 'b'), // put any number of a's or b's
+    q2: (stack, inputSymbol) => {
+      const top = stack[stack.length - 1];
+      return top === inputSymbol; // curr symbol matches top of stack?
+    },
+    q3: (stack) => stack.length === 1 && stack[0] === 'z0' // stack empty -> only z0 present
   };
 
   /* const lvl3Stacks = {
@@ -79,14 +99,7 @@ function StackVisualizer({ selectedSprite }) {
       } else {
         const nextState = `q${parseInt(currentState[1]) + 1}`; // generate the next state to go to - extracts the digit 'n' in string "qn"
         setCurrentState(nextState);
-
-        if (level === 1) {
-          setCurrentLevelImage(level1Images[nextState]);
-        }
-
-        if (level === 2) {
-          setCurrentLevelImage(level2Images[nextState]);
-        }
+        // image updation handled by userEffect() function
       }
     } else {
       alert('⛔ invalid stack for this state :T pls retry');
@@ -97,19 +110,33 @@ function StackVisualizer({ selectedSprite }) {
     setShowLevelInfo(true);
     setHasStarted(true);
     setStack(['z0']);
-    setCurrentLevelImage(level1Images['q0']);
+    setCurrentLevelImage(level1Images[currentState]);
   }
 
   const handleNextLevel = () => {
     setLevel(prev => prev + 1);
+    setShowLevelInfo(true);
     setStack(['z0']);
     setCurrentState('q0');
-    setHasStarted(true);
-    setShowLevelInfo(true);
-    setCanProceedToNextLevel(false); // reset for next level
-    setCurrentLevelImage(level2Images['q0']); // update FSD for level 2
-  };
 
+    // reset for upcoming level
+    setHasStarted(true);
+    setCanProceedToNextLevel(false);
+    setHasCompletedLevel(false);
+
+    setCurrentLevelImage(L2Img);
+
+    // setTimeout(() => {
+    //   if (level === 2) {
+    //     setCurrentLevelImage(level2Images['q0']); // set first image of level 2 (state q0)
+    //   }
+    // }, 0); // slight delay to ensure that state change is complete b4 setting img
+    
+    // ensure timer doesn't reset
+    if (!hasCompletedLevel) {
+      setHasStarted(true); // keep timer running from its current position
+    }
+  };
 
   return (
     <div className="stack-visualizer">
@@ -135,7 +162,7 @@ function StackVisualizer({ selectedSprite }) {
           </div>
         )}
 
-        {showLevelInfo && (
+        {showLevelInfo && !hasCompletedLevel && (
           <>
             <h2>
               Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^n'}
