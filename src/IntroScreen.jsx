@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './App.css'; // small-btn
 import './IntroScreen.css';
 

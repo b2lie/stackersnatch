@@ -1,0 +1,29 @@
+.middle-pane {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.middle-pane > img {
+    width: 25vw;
+    margin-right: 150px;
+}
+
+.middle-pane > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: rgb(131, 88, 50);
+    margin-bottom: 20px;
+}
