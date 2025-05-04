@@ -19,7 +19,7 @@ function StackVisualizer({ selectedSprite }) {
   useEffect(() => {
     let interval = null;
 
-    if (hasStarted) {
+    if (hasStarted && !(currentState === 'q3' && isStackValid)) { // stop timer when presented w/ expected final stack and allow moving to next lvl
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 1);
       }, 1000);
@@ -28,7 +28,7 @@ function StackVisualizer({ selectedSprite }) {
     }
 
     return () => clearInterval(interval);
-  }, [hasStarted]);
+  }, [hasStarted, currentState, isStackValid]); // dependency array -> code block rerun if any of these change
 
   useEffect(() => {
     if (level === 1) {
@@ -101,12 +101,15 @@ function StackVisualizer({ selectedSprite }) {
   }
 
   const handleNextLevel = () => {
-    setHasStarted(true);  // level already started
-    setStack(['z0']);     // only 'z0' on stack initially
+    setLevel(prev => prev + 1);
+    setStack(['z0']);
     setCurrentState('q0');
-    setCanProceedToNextLevel(true);
-    setLevel(level + 1);
+    setHasStarted(true);
+    setShowLevelInfo(true);
+    setCanProceedToNextLevel(false); // reset for next level
+    setCurrentLevelImage(level2Images['q0']); // update FSD for level 2
   };
+
 
   return (
     <div className="stack-visualizer">
@@ -165,18 +168,18 @@ function StackVisualizer({ selectedSprite }) {
           )}
         </div>
         {/* stack interaction buttons */}
-        {currentState === 'q3' ? (
-          canProceedToNextLevel ? (
+        {showLevelInfo && (
+          currentState === 'q3' && isStackValid ? (
             <button onClick={handleNextLevel}>
               next level
             </button>
-          ) : null
-        ) : (
-          <div className="button-row">
-            <button onClick={() => handlePush('0')}>push '0'</button>
-            <button onClick={handlePop}>pop</button>
-            <button onClick={handleTransition}>transition</button>
-          </div>
+          ) : (
+            <div className="button-row">
+              <button onClick={() => handlePush('0')}>push '0'</button>
+              <button onClick={handlePop}>pop</button>
+              <button onClick={handleTransition}>transition</button>
+            </div>
+          )
         )}
       </div>
     </div>
