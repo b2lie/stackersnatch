@@ -35,7 +35,15 @@ h1 {
 }
 
 button {
-    padding: 10px 20px;
     font-size: 14px;
     cursor: pointer;
+}
+
+input[type="text"] {
+    width: 15%;
+    padding: 10px;
+    margin: 20px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
 }

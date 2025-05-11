@@ -102,6 +102,8 @@
 }
 
 .rule-content img {
+    width: fit-content;
+    height: 280px;
     pointer-events: none;
 }
 

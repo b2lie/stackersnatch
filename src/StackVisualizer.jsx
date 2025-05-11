@@ -22,7 +22,7 @@ function StackVisualizer({ selectedSprite }) {
 
   // time tracking for each level
   const [time, setTime] = useState(0);
-  const [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(100);
   const timerRef = useRef(null);
 
   // for level 2
@@ -81,10 +81,10 @@ function StackVisualizer({ selectedSprite }) {
   useEffect(() => {
     // level-dependent; use current state to get lvl image
     if (level === 1) {
-      calculatePoints();
+      // calculatePoints();
       setCurrentLevelImage(level1Images[currentState]);
     } else if (level === 2) {
-      calculatePoints();
+      // calculatePoints();
       setCurrentLevelImage(level2Images[currentState]);
     }
   }, [level, currentState]);
@@ -159,14 +159,10 @@ function StackVisualizer({ selectedSprite }) {
 
   };
 
-  /* const lvl3Stacks = {
-  
-  }; */
-
   const calculatePoints = () => {
-    const maxTime = 60; // max time for this level
-    const timeScore = Math.max(0, maxTime - time); // inverting time (faster = more points)
-    const basePoints = 100; // base points for completing level
+    const maxTime = 60; // max time for a level
+    const timeScore = Math.min(0, maxTime + time); // inverting time (faster = more points)
+    const basePoints = 100; // base points for completing a level
 
     // deduct points based on no. of invalid moves or alerts
     const pointsFromTime = Math.floor(timeScore);
@@ -175,21 +171,25 @@ function StackVisualizer({ selectedSprite }) {
     setPoints(finalPoints);
   };
 
+
+  const deductPoints = () => {
+    if (points > 20) {
+      setPoints(prevPoints => prevPoints - 20);
+    }
+  }
+
   const handlePush = (symbol) => {
     pushSound.play();
-    pushSound.volume = 0.5;
+    pushSound.volume = 0.2;
     setStack((prevStack) => [...prevStack, symbol]);
-
-
     if (level === 2 && inputConfirmed) {
       setInputSoFar((prev) => prev + symbol);
     }
-
   };
 
   const handlePop = () => {
     popSound.play();
-    popSound.volume = 0.5;
+    popSound.volume = 0.2;
     if (stack.length > 1) { // prevent popping 'z0'
       const newStack = [...stack];
       const popped = newStack.pop();
@@ -199,12 +199,13 @@ function StackVisualizer({ selectedSprite }) {
 
     } else {
       alert("⚠ can't pop z0 !");
+      deductPoints();
     }
   };
 
   const handleTransition = () => {
     jumpSound.play();
-    jumpSound.volume = 0.5;
+    jumpSound.volume = 0.2;
 
     let isValid = false; // assuming current stack is invalid
 
@@ -219,6 +220,7 @@ function StackVisualizer({ selectedSprite }) {
       } else if (currentState === 'q2') {
         if (!poppedChar) {
           alert("🤚🏻 please pop something first !");
+          deductPoints();
           return;
         }
 
@@ -235,6 +237,7 @@ function StackVisualizer({ selectedSprite }) {
 
     setIsStackValid(isValid);
     if (isValid) { // player is moved to the next state + lvl img updated
+      setPoints(prevPoints => prevPoints + 30);
       if (currentState === 'q3') {
         setCanProceedToNextLevel(true);
       } else {
@@ -246,8 +249,8 @@ function StackVisualizer({ selectedSprite }) {
       setPopIndex(prev => prev + 1);
     } else {
       alert('⛔ invalid stack for this state :T pls retry');
+      deductPoints();
     }
-
   };
 
   const startRound = () => {
@@ -260,7 +263,6 @@ function StackVisualizer({ selectedSprite }) {
   const handleNextLevel = () => {
     if (level >= 2) {
       handleWin();
-      // navigate('/win');
       return;
     }
 
@@ -336,11 +338,17 @@ function StackVisualizer({ selectedSprite }) {
                     />
                     <button
                       onClick={() => {
-                        if (userInput.length % 2 === 0 && /^[ab]+$/.test(userInput)) {
+                        if (
+                          userInput.length % 2 === 0 &&
+                          /^[ab]+$/.test(userInput) &&
+                          userInput === userInput.split('').reverse().join('')
+                        ) {
                           setInputConfirmed(true);
-                          alert("✅ valid input confirmed! simulate wwʳ");
+                          alert("✅ valid palindrome confirmed! simulate wwʳ");
+                          setPoints(prevPoints => prevPoints + 10);
                         } else {
-                          alert("❌ input must be even-length and contain only a/b");
+                          alert("❌ input must be an even-length palindrome made of a/b only");
+                          deductPoints();
                         }
                       }}
                     >

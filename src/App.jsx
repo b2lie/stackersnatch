@@ -5,6 +5,7 @@ import PlayerSelect from './PlayerSelect';
 import RulesPage from './RulesPage';
 import Leaderboard from './Leaderboard';
 import WinPage from './WinPage';
+import { setPoints } from './StackVisualizer'
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState('intro');

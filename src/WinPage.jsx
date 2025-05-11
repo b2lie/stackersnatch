@@ -35,7 +35,7 @@ function WinPage() {
 
   // saving score and name to leaderboard
   const saveScore = () => {
-    if (!playerName) {
+    if (!playerName && !nameInputVisible) {
       alert('please enter your name :D');
       return;
     }
@@ -63,7 +63,7 @@ function WinPage() {
   };
 
   useEffect(() => {
-    setPlayerName('Player 1'); // example player name
+    setPlayerName('player_1'); // example player name
     setPlayerScore(100); // example score
     saveScore(); // save to leaderboard
   }, []);
@@ -72,10 +72,10 @@ function WinPage() {
     <div className="middle-pane">
       {nameInputVisible ? (
         <>
-          <h1>You Win!</h1>
+          <h1>you win!</h1>
           <input
             type="text"
-            placeholder="Enter your name"
+            placeholder="enter your name"
             value={playerName}
             onChange={handleNameChange}
           />
