@@ -1,6 +1,6 @@
 .middle-pane {
     display: flex;
-    flex-direction: column; /* Keep the elements stacked vertically */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 70vh;
@@ -11,13 +11,13 @@
 }
 
 .middle-pane > img {
-    width: 25vw;
-    margin-bottom: 20px; /* Add some space below the image */
+    width: 250px;
+    margin-bottom: 20px;
 }
 
 .middle-pane > div {
     display: flex;
-    flex-direction: column; /* vertical h1 and leaderboard */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -40,10 +40,11 @@ button {
 }
 
 input[type="text"] {
-    width: 15%;
+    width: 10%;
     padding: 10px;
     margin: 20px 0;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
+    text-align: center;
 }

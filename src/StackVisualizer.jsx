@@ -40,7 +40,8 @@ function StackVisualizer({ selectedSprite }) {
 
   const handleWin = () => {
     setHasWon(true);
-    calculatePoints();
+    setPoints(points);
+    // calculatePoints();
   };
 
   useEffect(() => {
@@ -159,17 +160,17 @@ function StackVisualizer({ selectedSprite }) {
 
   };
 
-  const calculatePoints = () => {
-    const maxTime = 60; // max time for a level
-    const timeScore = Math.min(0, maxTime + time); // inverting time (faster = more points)
-    const basePoints = 100; // base points for completing a level
+  // const calculatePoints = () => {
+  //   const maxTime = 60; // max time for a level
+  //   const timePenalty = Math.min(maxTime, time); // prevent negative time score
+  //   const timeScore = Math.max(0, maxTime - timePenalty); // more time = reduced points
+  //   const basePoints = 100; // base points for completing a level
 
-    // deduct points based on no. of invalid moves or alerts
-    const pointsFromTime = Math.floor(timeScore);
-    const finalPoints = basePoints + pointsFromTime;
+  //   // deduct points based on no. of invalid moves or alerts
+  //   const finalPoints = basePoints + timeScore;
 
-    setPoints(finalPoints);
-  };
+  //   setPoints(finalPoints);
+  // };
 
 
   const deductPoints = () => {
@@ -295,7 +296,7 @@ function StackVisualizer({ selectedSprite }) {
 
   return (<div className="stack-visualizer">
     {hasWon ? (
-      <WinPage />
+      <WinPage score={points}/>
     ) : (
       <>
         {/* timer + points panel */}

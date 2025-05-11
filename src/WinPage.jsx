@@ -18,10 +18,10 @@ const goHome = () => {
   }, 700); // wait 0.7s
 }
 
-function WinPage() {
+function WinPage({ score }) {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [playerName, setPlayerName] = useState('');
-  const [playerScore, setPlayerScore] = useState(0);
+  const [playerScore, setPlayerScore] = useState(score || 0);
   const [nameInputVisible, setNameInputVisible] = useState(true);
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
 
@@ -35,15 +35,21 @@ function WinPage() {
 
   // saving score and name to leaderboard
   const saveScore = () => {
+    if (!playerName || playerScore <= 0) {
+      return; // not saving empty or zero scores
+    }
+
     if (!playerName && !nameInputVisible) {
       alert('please enter your name :D');
       return;
     }
 
     const newEntry = { name: playerName, score: playerScore };
+    console.log("saving new entry:", newEntry);
 
     // get current leaderboard
     const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    console.log("current leaderboard:", leaderboard);
 
     // add new entry
     leaderboard.push(newEntry);
@@ -57,21 +63,22 @@ function WinPage() {
 
   const handleGameEnd = () => {
     setNameInputVisible(false);
-    setPlayerScore(100); // filler score
+    // setPlayerScore(100); // filler score
     saveScore(); // save score to leaderboard
     setScoreSubmitted(true);
   };
 
   useEffect(() => {
-    setPlayerName('player_1'); // example player name
-    setPlayerScore(100); // example score
-    saveScore(); // save to leaderboard
+    setPlayerName('player 1'); // example player name
+    setPlayerScore(score); // setting score
+    // saveScore(); // save to leaderboard
   }, []);
 
   return (
     <div className="middle-pane">
       {nameInputVisible ? (
         <>
+          {/* <img src={ require('./sprites/win.gif') }/> */}
           <h1>you win!</h1>
           <input
             type="text"
@@ -86,7 +93,7 @@ function WinPage() {
           <h1>congratulations, {playerName}!</h1>
 
           <div className="button-row">
-            {!scoreSubmitted && (
+            {!showLeaderboard && scoreSubmitted && (
               <button onClick={viewLeaderboard}>view leaderboard</button>
             )}
             <button onClick={goHome}>return home</button>
