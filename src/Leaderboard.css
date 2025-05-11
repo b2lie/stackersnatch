@@ -22,3 +22,15 @@ ul li {
 ul li span {
     color: rgb(93, 62, 34);
 }
+
+.clear-leaderboard-text {
+    color: #d5696b;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.clear-leaderboard-text:hover {
+    color: #a4d569;
+}

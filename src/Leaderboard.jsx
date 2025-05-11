@@ -6,7 +6,7 @@ function Leaderboard() {
 
   useEffect(() => {
     const storedLeaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
-    
+
     // filtering out entries with empty names or scores of 0
     const validLeaderboard = storedLeaderboard.filter(
       entry => entry.name.trim() && entry.score > 0
@@ -18,6 +18,14 @@ function Leaderboard() {
     // clean leaderboard to state
     setLeaderboard(validLeaderboard);
   }, []);
+
+  const clearLeaderboard = () => {
+    // remove leaderboard from localStorage
+    localStorage.removeItem('leaderboard');
+    // reset leaderboard to an empty array
+    setLeaderboard([]);
+    alert("🚮 leaderboard cleared successfully!");
+  };
 
   return (
     <div className="leaderboard">
@@ -33,6 +41,9 @@ function Leaderboard() {
           <li>no valid scores yet!</li>
         )}
       </ul>
+      <p onClick={clearLeaderboard} className="clear-leaderboard-text">
+        clear leaderboard
+      </p>
     </div>
   );
 }
