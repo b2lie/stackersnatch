@@ -3,6 +3,8 @@
 </p>
 
 ## 🕹 Gamified Stack Battle Simulator
+<br/>
+
 <p align="center">
     <img src="src/sprites/win.gif" alt="cute img" title="cute img" width="450"/>
 </p>
