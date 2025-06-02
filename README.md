@@ -40,8 +40,6 @@ So yes, **it is incomplete**, for now! It's missing an ε-transition level that 
 
 <br/>
 
----
-
 ## 🛠 How to run this app locally
 
 ### 📦 requirements
@@ -71,8 +69,6 @@ npm start
 #### ❗❗ if you don’t have node installed, get it here: https://nodejs.org
 
 <br/>
-
----
 
 ## For anyone wanting to recreate something similar:
 
