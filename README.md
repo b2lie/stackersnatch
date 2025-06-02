@@ -1,1 +1,1 @@
-#### under-construction 🤖
+![stackersnatch hero image](/src/sprites/hero-img.png "stackersnatch")
