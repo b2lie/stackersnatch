@@ -42,8 +42,6 @@ So yes, **it is incomplete**, for now! It's missing an ε-transition level that 
 
 ---
 
-<br/>
-
 ## 🛠 How to run this app locally
 
 ### 📦 requirements
@@ -76,8 +74,6 @@ npm start
 
 ---
 
-<br/>
-
 ## For anyone wanting to recreate something similar:
 
 These repos really proved to be helpful for me during the learning/research process. Hope they help you out, too!
@@ -88,11 +84,7 @@ These repos really proved to be helpful for me during the learning/research proc
 Happy PDA-simulating :D and best of luck, I know I needed it 😿.<br/>
 Also would love to see how you modify this! 😸🧡
 
-<br/>
-
 ---
-
-<br/>
 
 ### Copyright © 2025 b2lie
 
