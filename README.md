@@ -1,8 +1,6 @@
 ![stackersnatch hero image](src/sprites/hero-img.png "stackersnatch")
 ## 🕹 Gamified Stack Battle Simulator
 
----
-
 ## 🤷🏻‍♀️ What's this about even?
 
 Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester. We were tasked with creating both a hardware and a software project to highlight how well we'd retained the topics we'd covered in class. Among the many options offered for the software task, this one stood out to me the most - it challenged me to take my understanding of Pushdown Automata (PDA) and turn it into something genuinely useful (and fun!) for other students who might be struggling with the topic.
@@ -13,7 +11,7 @@ This was also my *first-ever react project*, so I dove headfirst into learning i
 
 Help players see how a PDA works, using a game-like interface to make the concept easier to understand and way more engaging.
 
-## 👾 features:
+## 👾 Features:
 
 - [ ] Interactive Stack Visualization
 - [ ] Puzzle Levels Increasing in Difficulty (_in progress_)
@@ -40,14 +38,19 @@ cd stackersnatch
 ```
 
 2. **install dependencies**
-`npm install`
+```
+npm install
+```
 
 3. **start the dev server**
-`npm start`
+```
+npm start
+```
 
 
 #### ❗❗ if you don’t have node installed, get it here: https://nodejs.org
 
+---
 
 ## For anyone wanting to recreate something similar:
 
