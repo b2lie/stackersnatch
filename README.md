@@ -82,5 +82,8 @@ Also would love to see how you modify this! 😸🧡
 
 ### Copyright © 2025 b2lie
 
+### Artwork Credits:
+[Cup Nooble - Sprout Lands Asset Pack](https://cupnooble.itch.io/sprout-lands-asset-pack)
+
 ### This program is **free software**
 You can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
