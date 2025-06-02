@@ -1,14 +1,15 @@
 ![stackersnatch hero image](src/sprites/hero-img.png "stackersnatch")
 ## 🕹 Gamified Stack Battle Simulator
 
+![hehe](src/sprites/win.gif "cute img")
+
 ## 🤷🏻‍♀️ What's this about even?
 
 Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester. We were tasked with creating both a hardware and a software project to highlight how well we'd retained the topics we'd covered in class. Among the many options offered for the software task, this one stood out to me the most - it challenged me to take my understanding of Pushdown Automata (PDA) and turn it into something genuinely useful (and fun!) for other students who might be struggling with the topic.
 
 This was also my *first-ever react project*, so I dove headfirst into learning it while building this simulation from scratch. Heh.
 
-## The goal?
-
+**My goal?**
 Help players see how a PDA works, using a game-like interface to make the concept easier to understand and way more engaging.
 
 ## 👾 Features:
@@ -20,7 +21,8 @@ Help players see how a PDA works, using a game-like interface to make the concep
 ## 😿 Note to self (and anyone reading):
 
 **This is a project that was definitely rushed** and could use a bit of repolishing - juggling other assignments and deadlines made it harder to finish everything I had envisioned, I'll admit :c
-So yes, **it is incomplete**, for now! It's missing an ε-transition level that I was meaning to add but was unable to do so due to the strict time constraint.
+
+<br/>So yes, **it is incomplete**, for now! It's missing an ε-transition level that I was meaning to add but was unable to do so due to the strict time constraint.
 
 ---
 
