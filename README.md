@@ -1,4 +1,7 @@
-![stackersnatch hero image](src/sprites/hero-img.png "stackersnatch")
+<p align="center">
+  <img src="src/sprites/hero-img.png" alt="stackersnatch hero image" />
+</p>
+
 ## 🕹 Gamified Stack Battle Simulator
 
 ![hehe](src/sprites/win.gif "cute img")
