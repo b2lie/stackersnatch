@@ -1,1 +1,1 @@
-![stackersnatch hero image](/src/sprites/hero-img.png "stackersnatch")
+![stackersnatch hero image](src/sprites/hero-img.png "stackersnatch")
