@@ -3,9 +3,9 @@
 </p>
 
 ## 🕹 Gamified Stack Battle Simulator
-
-<img src="src/sprites/win.gif" alt="cute img" title="cute img" width="300"/>
-
+<p align="center">
+    <img src="src/sprites/win.gif" alt="cute img" title="cute img" width="500"/>
+</p>
 ## 🤷🏻‍♀️ What's this about even?
 
 Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester. We were tasked with creating both a hardware and a software project to highlight how well we'd retained the topics we'd covered in class. Among the many options offered for the software task, this one stood out to me the most - it challenged me to take my understanding of Pushdown Automata (PDA) and turn it into something genuinely useful (and fun!) for other students who might be struggling with the topic.
