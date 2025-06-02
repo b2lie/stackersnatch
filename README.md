@@ -4,7 +4,7 @@
 
 ## 🕹 Gamified Stack Battle Simulator
 
-![hehe](src/sprites/win.gif "cute img")
+<img src="src/sprites/win.gif" alt="cute img" title="cute img" width="300"/>
 
 ## 🤷🏻‍♀️ What's this about even?
 
