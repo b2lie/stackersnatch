@@ -13,14 +13,20 @@
 
 ## 🤷🏻‍♀️ What's this about even?
 
-Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester. We were tasked with creating both a hardware and a software project to highlight how well we'd retained the topics we'd covered in class. 
+Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester.
+We were tasked with creating both a hardware and a software project to highlight how well we'd retained the topics we'd 
+covered in class. 
 
-Among the many options offered for the software task, this one stood out to me the most - it challenged me to take my understanding of Pushdown Automata (PDA) and turn it into something genuinely useful (and fun!) for other students who might be struggling with the topic.
+Among the many options offered for the software task, this one stood out to me the most - it challenged me to take my 
+understanding of Pushdown Automata (PDA) and turn it into something genuinely useful (and fun!) for other students who 
+might be struggling with the topic.
 
-This was also my *first-ever react project*, so I dove headfirst into learning it while building this simulation from scratch. Heh.
+This was also my *first-ever react project*, so I dove headfirst into learning it while building this simulation from 
+scratch. Heh.
 
 **My goal?**
-Help players see how a PDA works, using a game-like interface to make the concept easier to understand and way more engaging.
+Help players see how a PDA works, using a game-like interface to make the concept easier to understand and way more 
+engaging.
 
 <br/>
 
@@ -34,9 +40,11 @@ Help players see how a PDA works, using a game-like interface to make the concep
 
 ## 😿 Note to self (and anyone reading):
 
-**This is a project that was definitely rushed** and could use a bit of repolishing - juggling other assignments and deadlines made it harder to finish everything I had envisioned, I'll admit :c <br/>
+**This is a project that was definitely rushed** and could use a bit of repolishing - juggling other assignments and 
+deadlines made it harder to finish everything I had envisioned, I'll admit :c <br/>
 
-So yes, **it is incomplete**, for now! It's missing an ε-transition level that I was meaning to add but was unable to do so due to the strict time constraint.
+So yes, **it is incomplete**, for now! It's missing an ε-transition level that I was meaning to add but was unable to do
+so due to the strict time constraint.
 
 <br/>
 
@@ -84,10 +92,17 @@ Also would love to see how you modify this! 😸🧡
 
 ---
 
-### Copyright © 2025 b2lie
+## 📜 License & Credits
 
-### Artwork Credits:
-[Cup Nooble - Sprout Lands Asset Pack](https://cupnooble.itch.io/sprout-lands-asset-pack)
+**Copyright © 2025 b2lie**
 
-### This program is **free software**
-You can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is free software:  
+you can redistribute it and/or modify it under the terms of the  
+[GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html) as published by the Free Software Foundation,  
+either version 3 of the License, or (at your option) any later version.
+
+---
+
+### 🎨 Artwork Credits
+
+**Cup Nooble** – *[Sprout Lands Asset Pack](https://cupnooble.itch.io/sprout-lands-asset-pack)*
