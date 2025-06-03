@@ -92,8 +92,7 @@ Also would love to see how you modify this! 😸🧡
 
 **Copyright © 2025 b2lie**
 
-Font: Mojangles by [Liam Butler (SpiffyKids)](https://fontstruct.com/fontstructors/1463562/spiffykids)<br/>
-Licensed under [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/)
+Font: Mojangles by [Liam Butler (SpiffyKids)](https://fontstruct.com/fontstructors/1463562/spiffykids) - Licensed under [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/)
 
 This program is free software:  you can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html)
 as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
