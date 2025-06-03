@@ -305,158 +305,161 @@ function StackVisualizer({ selectedSprite }) {
 
   };
 
-  return (
-    <div className="stack-visualizer">
-      {hasWon ? (
-        <WinPage score={points} />
-      ) : (
-        <>
-          {/* timer + points panel */}
-          < div className="left-panel"> <h2>timer: {time}s</h2>
-            <img
-              src={selectedSprite?.img || '/chars/char1.png'}
-              alt="player"
-              style={{ width: '100px', height: '100px', marginTop: '10px' }}
-            /> <p>&gt;  {selectedSprite?.name || 'charlie'}  &lt;</p> <br /> <a className="exit" href="/">exit</a>
-            <p className="points">points: {points}</p>
-          </div>
+  return (hasWon ? <WinPage score={points} /> : (
+    <main>
+      <div className="stack-visualizer">
+        {hasWon ? (
+          <WinPage score={points} />
+        ) : (
+          <>
+            {/* timer + points panel */}
+            < div className="left-panel"> <h2>timer: {time}s</h2>
+              <img
+                src={selectedSprite?.img || '/chars/char1.png'}
+                alt="player"
+                style={{ width: '100px', height: '100px', marginTop: '10px' }}
+              /> <p>&gt;  {selectedSprite?.name || 'charlie'}  &lt;</p> <br /> <a className="exit" href="/">exit</a>
+              <p className="points">points: {points}</p>
+            </div>
 
-          {/* levels panel */}
-          <div className="middle-panel" style={{ position: 'relative' }}>
-            {customAlert && (
-              <div className="alert">
-                <span className="alert-text">{customAlert}</span>
-                <span
-                  className="alert-close"
-                  onClick={() => setCustomAlert(null)}
-                  aria-label="Close alert"
-                >
-                  ❌
-                </span>
-              </div>
-            )}
+            {/* levels panel */}
+            <div className="middle-panel" style={{ position: 'relative' }}>
+              {customAlert && (
+                <div className="alert">
+                  <span className="alert-text">{customAlert}</span>
+                  <span
+                    className="alert-close"
+                    onClick={() => setCustomAlert(null)}
+                    aria-label="Close alert"
+                  >
+                    ❌
+                  </span>
+                </div>
+              )}
 
-            {!showLevelInfo && (
-              <div className="center-button">
-                <button onClick={() => startRound()}>
-                  {'[ round start ]'}
-                </button>
-              </div>
-            )}
+              {!showLevelInfo && (
+                <div className="center-button">
+                  <button onClick={() => startRound()}>
+                    {'[ round start ]'}
+                  </button>
+                </div>
+              )}
 
-            {showLevelInfo && !hasCompletedLevel && (
-              <>
-                {showSuccess && (
-                  <div className="alert success">
-                    <span className="alert-close" onClick={() => setShowSuccess(false)}>❌</span>
-                    <span className="alert-text">{successMessage}</span>
-                  </div>
-                )}
-
-                {showError && (
-                  <div className="alert error">
-                    <span className="alert-close" onClick={() => setShowError(false)}>❌</span>
-                    <span className="alert-text">{errorMessage}</span>
-                  </div>
-                )}
-
-                <h2>
-                  Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^+'}
-                </h2>
-                {level === 1 && <img src={currentLevelImage} alt="current level" />}
-
-                {level === 2 && !inputConfirmed && (
-                  <div className="input-prompt">
-                    <h3>enter a string (a + b)^+ to validate wwʳ:</h3>
-                    <div className="input-area">
-                      <input
-                        type="text"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                        placeholder="e.g. abba"
-                      />
-
-                      <button
-                        onClick={() => {
-                          if (
-                            userInput.length % 2 === 0 &&
-                            /^[ab]+$/.test(userInput) &&
-                            userInput === userInput.split('').reverse().join('')
-                          ) {
-                            setInputConfirmed(true);
-                            setSuccessMessage("✅ valid palindrome confirmed !");
-                            setShowSuccess(true);
-                            setTimeout(() => setShowSuccess(false), 3000);
-                            setPoints(prevPoints => prevPoints + 10);
-                          } else {
-                            setErrorMessage("🙅🏻‍♀️ input must be an even-length palindrome [a's & b's only] !");
-                            setShowError(true);
-                            setTimeout(() => setShowError(false), 3000);
-                            deductPoints();
-                          }
-                        }}
-                      >
-                        confirm
-                      </button>
+              {showLevelInfo && !hasCompletedLevel && (
+                <>
+                  {showSuccess && (
+                    <div className="alert success">
+                      <span className="alert-close" onClick={() => setShowSuccess(false)}>❌</span>
+                      <span className="alert-text">{successMessage}</span>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {level === 2 && inputConfirmed && <img src={currentLevelImage} alt="current level" />}
-              </>
-            )}
+                  {showError && (
+                    <div className="alert error">
+                      <span className="alert-close" onClick={() => setShowError(false)}>❌</span>
+                      <span className="alert-text">{errorMessage}</span>
+                    </div>
+                  )}
 
-            {/* display state we're at currently */}
-            {hasStarted && inputConfirmed && (
-              <div>
-                <br />
-                <h3>current state: {currentState}</h3>
-              </div>
-            )}
-          </div>
+                  <h2>
+                    Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^+'}
+                  </h2>
+                  {level === 1 && <img src={currentLevelImage} alt="current level" />}
 
-          {/* stack panel */}
-          <div className="right-panel">
-            <h2>the stack</h2>
-            <div className="stack-box">
-              {stack.length === 0 ? (
-                <p>[ empty ]</p>
-              ) : (
-                [...stack].reverse().map((item, index) => ( // pushes items on top of z0
-                  <div key={index} className="stack-item">
-                    {item}
-                  </div>
-                ))
+                  {level === 2 && !inputConfirmed && (
+                    <div className="input-prompt">
+                      <h3>enter a string (a + b)^+ to validate wwʳ:</h3>
+                      <div className="input-area">
+                        <input
+                          type="text"
+                          value={userInput}
+                          onChange={(e) => setUserInput(e.target.value)}
+                          placeholder="e.g. abba"
+                        />
+
+                        <button
+                          onClick={() => {
+                            if (
+                              userInput.length % 2 === 0 &&
+                              /^[ab]+$/.test(userInput) &&
+                              userInput === userInput.split('').reverse().join('')
+                            ) {
+                              setInputConfirmed(true);
+                              setSuccessMessage("✅ valid palindrome confirmed !");
+                              setShowSuccess(true);
+                              setTimeout(() => setShowSuccess(false), 3000);
+                              setPoints(prevPoints => prevPoints + 10);
+                            } else {
+                              setErrorMessage("🙅🏻‍♀️ input must be an even-length palindrome [a's & b's only] !");
+                              setShowError(true);
+                              setTimeout(() => setShowError(false), 3000);
+                              deductPoints();
+                            }
+                          }}
+                        >
+                          confirm
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {level === 2 && inputConfirmed && <img src={currentLevelImage} alt="current level" />}
+                </>
+              )}
+
+              {/* display state we're at currently */}
+              {hasStarted && inputConfirmed && (
+                <div>
+                  <br />
+                  <h3>current state: {currentState}</h3>
+                </div>
               )}
             </div>
-            {/* stack interaction buttons */}
-            {showLevelInfo && (
-              currentState === 'q3' && isStackValid ? (
-                <button onClick={handleNextLevel}>
-                  next level
-                </button>
-              ) : (
-                <div className="button-row">
-                  {level === 1 && (
-                    <button onClick={() => handlePush('0')}>push '0'</button>
-                  )}
-                  {level === 2 && (
-                    <>
-                      <button onClick={() => handlePush('a')}>push 'a'</button>
-                      <button onClick={() => handlePush('b')}>push 'b'</button>
-                    </>
-                  )}
-                  <button onClick={handlePop}>pop</button>
-                  <button onClick={handleTransition}>transition</button>
-                </div>
-              )
-            )}
 
-          </div>
-        </>
-      )}
-    </div >
-  );
+            {/* stack panel */}
+            <div className="right-panel">
+              <h2>the stack</h2>
+              <div className="stack-box">
+                {stack.length === 0 ? (
+                  <p>[ empty ]</p>
+                ) : (
+                  [...stack].reverse().map((item, index) => ( // pushes items on top of z0
+                    <div key={index} className="stack-item">
+                      {item}
+                    </div>
+                  ))
+                )}
+              </div>
+              {/* stack interaction buttons */}
+              {showLevelInfo && (
+                currentState === 'q3' && isStackValid ? (
+                  <button onClick={handleNextLevel}>
+                    next level
+                  </button>
+                ) : (
+                  <div className="button-row">
+                    {level === 1 && (
+                      <button onClick={() => handlePush('0')}>push '0'</button>
+                    )}
+                    {level === 2 && (
+                      <>
+                        <button onClick={() => handlePush('a')}>push 'a'</button>
+                        <button onClick={() => handlePush('b')}>push 'b'</button>
+                      </>
+                    )}
+                    <button onClick={handlePop}>pop</button>
+                    <button onClick={handleTransition}>transition</button>
+                  </div>
+                )
+              )}
+
+            </div>
+          </>
+        )}
+      </div >
+    </main>
+  )
+  )
 }
 
 export default StackVisualizer;

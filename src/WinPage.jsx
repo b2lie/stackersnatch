@@ -74,35 +74,39 @@ function WinPage({ score }) {
   }, []);
 
   return (
-    <div className="middle-pane">
-      {nameInputVisible ? (
-        <>
-          {/* <img src={ require('./sprites/win.gif') }/> */}
-          <h1>you win!</h1>
-          <input
-            type="text"
-            placeholder="enter your name"
-            value={playerName}
-            onChange={handleNameChange}
-          />
-          <button onClick={handleGameEnd}>submit score</button>
-        </>
-      ) : (
-        <>
-          <h1>congratulations, {playerName}!</h1>
+    <div className="winpage-container">
+      <div className="winpane-left">
+        <img src={require('./sprites/win.gif')} />
+      </div>
 
-          <div className="button-row">
-            {!showLeaderboard && scoreSubmitted && (
-              <button onClick={viewLeaderboard}>view leaderboard</button>
-            )}
-            <button onClick={goHome}>return home</button>
-          </div>
-        </>
-      )}
+      <div className="winpane-right">
+        {nameInputVisible ? (
+          <>
+            <h1>you win !!!!</h1>
+            <input
+              type="text"
+              placeholder="enter your name"
+              value={playerName}
+              onChange={handleNameChange}
+            />
+            <button onClick={handleGameEnd}>submit score</button>
+          </>
+        ) : (
+          <>
+            <h1>congratulations, {playerName}!</h1>
+            <div className="button-row">
+              {!showLeaderboard && scoreSubmitted && (
+                <button onClick={viewLeaderboard}>view leaderboard</button>
+              )}
+              <button onClick={goHome}>return home</button>
+            </div>
+          </>
+        )}
 
-      {showLeaderboard && <Leaderboard />}
+        {showLeaderboard && <Leaderboard />}
+      </div>
     </div>
   );
 }
 
-export default WinPage;
+  export default WinPage;
