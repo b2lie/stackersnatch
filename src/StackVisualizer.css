@@ -187,3 +187,30 @@ button:hover {
 button {
     font-family: 'Mojangle', sans-serif;
 }
+
+.alert {
+  display: block;
+  margin: 20px auto 0;
+  max-width: 300px;
+  background-color: #fffbe6;
+  border: 2px dashed #bfa27a;
+  padding: 10px 20px 10px 5px;
+  border-radius: 10px;
+  font-size: 10px;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.alert-close {
+  position: absolute;
+  top: 10px;
+  right: 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.alert-text {
+  color: #5c4033;
+}

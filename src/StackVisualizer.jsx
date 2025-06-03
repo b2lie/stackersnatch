@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { level1Images, level2Images } from './ImageMap';
 import WinPage from './WinPage';
@@ -13,6 +13,11 @@ function StackVisualizer({ selectedSprite }) {
   const [hasStarted, setHasStarted] = useState(false);
   const [currentState, setCurrentState] = useState('q0');
   const [isStackValid, setIsStackValid] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showError, setShowError] = useState(false);
+
 
   // for level-state functionality
   const [showLevelInfo, setShowLevelInfo] = useState(false);
@@ -296,7 +301,7 @@ function StackVisualizer({ selectedSprite }) {
 
   return (<div className="stack-visualizer">
     {hasWon ? (
-      <WinPage score={points}/>
+      <WinPage score={points} />
     ) : (
       <>
         {/* timer + points panel */}
@@ -321,12 +326,25 @@ function StackVisualizer({ selectedSprite }) {
 
           {showLevelInfo && !hasCompletedLevel && (
             <>
+              {showSuccess && (
+                <div className="alert success">
+                  <span className="alert-close" onClick={() => setShowSuccess(false)}>❌</span>
+                  <span className="alert-text">{successMessage}</span>
+                </div>
+              )}
+
+              {showError && (
+                <div className="alert error">
+                  <span className="alert-close" onClick={() => setShowError(false)}>❌</span>
+                  <span className="alert-text">{errorMessage}</span>
+                </div>
+              )}
+
               <h2>
                 Level {level} - {level === 1 ? '0^n 1^n' : '(a+b)^+'}
               </h2>
               {level === 1 && <img src={currentLevelImage} alt="current level" />}
 
-              {/* Insert input prompt for Level 2 */}
               {level === 2 && !inputConfirmed && (
                 <div className="input-prompt">
                   <h3>enter a string (a + b)^+ to validate wwʳ:</h3>
@@ -337,6 +355,7 @@ function StackVisualizer({ selectedSprite }) {
                       onChange={(e) => setUserInput(e.target.value)}
                       placeholder="e.g. abba"
                     />
+
                     <button
                       onClick={() => {
                         if (
@@ -345,10 +364,14 @@ function StackVisualizer({ selectedSprite }) {
                           userInput === userInput.split('').reverse().join('')
                         ) {
                           setInputConfirmed(true);
-                          alert("✅ valid palindrome confirmed! simulate wwʳ");
+                          setSuccessMessage("✅ valid palindrome confirmed !");
+                          setShowSuccess(true);
+                          setTimeout(() => setShowSuccess(false), 3000);
                           setPoints(prevPoints => prevPoints + 10);
                         } else {
-                          alert("❌ input must be an even-length palindrome made of a/b only");
+                          setErrorMessage("🙅🏻‍♀️ input must be an even-length palindrome [a's & b's only] !");
+                          setShowError(true);
+                          setTimeout(() => setShowError(false), 3000);
                           deductPoints();
                         }
                       }}
@@ -358,12 +381,13 @@ function StackVisualizer({ selectedSprite }) {
                   </div>
                 </div>
               )}
+
               {level === 2 && inputConfirmed && <img src={currentLevelImage} alt="current level" />}
             </>
           )}
 
           {/* display state we're at currently */}
-          {hasStarted && (
+          {hasStarted && inputConfirmed && (
             <div>
               <br />
               <h3>current state: {currentState}</h3>
