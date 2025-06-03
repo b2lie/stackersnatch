@@ -6,7 +6,7 @@
 <br/>
 
 <p align="center">
-    <img src="src/sprites/win.gif" alt="cute img" title="cute img" width="450"/>
+  <img src="src/sprites/win.gif" alt="cute img" title="cute img" width="450"/>
 </p>
 
 ## 🤷🏻‍♀️ What's this about even?
