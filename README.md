@@ -72,9 +72,7 @@ npm start
 
 <br/>
 
-#### ❗❗ if you don’t have node installed, get it here: https://nodejs.org
-
-<br/>
+> ❗❗ if you don’t have node installed, get it here 👉🏻 https://nodejs.org
 
 ## 👩🏻‍💻 For anyone wanting to recreate something similar:
 
