@@ -35,7 +35,7 @@ function RulesPage() {
             title: 'PDA recap',
             content: (
                 <div className="rule-content">
-                    <img src={ require('./sprites/pda_info.png') }/>
+                    <img src={require('./sprites/pda_info.png')} />
                 </div>
             ),
         },
@@ -103,7 +103,7 @@ function RulesPage() {
         <div className="rules">
             <button onClick={handleHome} className="close-btn">X</button>
 
-            <h1>game rules</h1>
+            {/* <h1>game rules</h1> */}
 
             <div className="rule-container">
                 <h2>{rules[currentRuleIndex].title}</h2>

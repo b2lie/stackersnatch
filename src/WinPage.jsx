@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Leaderboard from './Leaderboard'
-import StackVisualizer from './StackVisualizer';
 import './WinPage.css';
 
 const closeSound = new Audio('./sounds/close.mp3');

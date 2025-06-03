@@ -15,12 +15,12 @@
     margin-bottom: 20px;
 }
 
-.middle-pane > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.middle-pane > div:not(.button-row) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 h1 {
@@ -29,12 +29,13 @@ h1 {
 }
 
 .button-row {
-    gap: 15px;
+    gap: 10px;
     display: flex;
     flex-direction: row;
 }
 
 button {
+    color: none;
     font-size: 14px;
     cursor: pointer;
 }

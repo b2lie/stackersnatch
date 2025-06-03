@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './App.css'; // small-btn
 import './IntroScreen.css';
 
-const IntroScreen = ({ onStart, onChoosePlayer, onShowRules }) => {
+const IntroScreen = ({ onStart, onChoosePlayer, onShowRules, onShowLeaderboard }) => {
   return (
     <div className="intro-screen">
       <h1 className="title">stackersnatch</h1>
@@ -11,8 +11,9 @@ const IntroScreen = ({ onStart, onChoosePlayer, onShowRules }) => {
 
       <div className="btn-group">
         <button onClick={onStart} className="small-btn">start</button>
-        <button onClick={onChoosePlayer} className="small-btn">player select</button>
+        {/* <button onClick={onChoosePlayer} className="small-btn">player select</button> */}
         <button onClick={onShowRules} className="small-btn">rules</button>
+        <button onClick={onShowLeaderboard} className="small-btn">leaderboard</button>
       </div>
 
       <div className="creds">
