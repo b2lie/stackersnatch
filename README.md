@@ -9,8 +9,6 @@
     <img src="src/sprites/win.gif" alt="cute img" title="cute img" width="450"/>
 </p>
 
-<br/>
-
 ## 🤷🏻‍♀️ What's this about even?
 
 Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester.
