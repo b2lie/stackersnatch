@@ -22,9 +22,8 @@ might be struggling with the topic.
 This was also my *first-ever react project*, so I dove headfirst into learning it while building this simulation from 
 scratch.
 
-**My goal?**
-Help players see how a PDA works, using a game-like interface to make the concept easier to understand and way more 
-engaging.
+My goal was to help players see how a PDA works, using a game-like interface to make the concept easier to understand and
+way more engaging.
 
 <br/>
 
