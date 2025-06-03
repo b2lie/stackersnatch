@@ -52,6 +52,8 @@ so due to the strict time constraint.
 - node.js (v18+ recommended)
 - npm (comes with node)
 
+> ❗❗ if you don’t have node installed, get it here 👉🏻 https://nodejs.org
+
 <br/>
 
 1. **clone the repo**
@@ -71,8 +73,6 @@ npm start
 ```
 
 <br/>
-
-> ❗❗ if you don’t have node installed, get it here 👉🏻 https://nodejs.org
 
 ## 👩🏻‍💻 For anyone wanting to recreate something similar:
 
