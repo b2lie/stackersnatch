@@ -115,17 +115,17 @@ button:hover {
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #f9f9f9;
-  }
-  
-  .input-prompt input {
+}
+
+.input-prompt input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  .input-prompt button {
+}
+
+.input-prompt button {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
@@ -134,12 +134,12 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
     width: 100%;
-  }
-  
-  .input-prompt button:hover {
+}
+
+.input-prompt button:hover {
     background-color: #45a049;
-  }
-  
+}
+
 
 .center-button button {
     color: #81b85c;
@@ -189,28 +189,31 @@ button {
 }
 
 .alert {
-  display: block;
-  margin: 20px auto 0;
-  max-width: 300px;
-  background-color: #fffbe6;
-  border: 2px dashed #bfa27a;
-  padding: 10px 20px 10px 5px;
-  border-radius: 10px;
-  font-size: 10px;
-  position: relative;
-  display: inline-block;
-  box-sizing: border-box;
-  text-align: center;
+    display: block;
+    margin: 20px auto 0;
+    max-width: 300px;
+    background-color: #fffbe6;
+    border: 2px dashed #bfa27a;
+    padding: 10px 20px 10px 5px;
+    border-radius: 10px;
+    font-size: 10px;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    width: max-content;
 }
 
 .alert-close {
-  position: absolute;
-  top: 10px;
-  right: 2px;
-  cursor: pointer;
-  font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 1px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .alert-text {
-  color: #5c4033;
+    /* white-space: pre-line; */
+    padding-right: 15px;
+    color: #5c4033;
 }
