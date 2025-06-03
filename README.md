@@ -89,7 +89,7 @@ Also would love to see how you modify this! 😸🧡
 
 ---
 
-## 📜 License & Credits
+## 📜 License & credits
 
 **Copyright © 2025 b2lie**
 
@@ -98,6 +98,6 @@ as published by the Free Software Foundation, either version 3 of the License, o
 
 ---
 
-### 🎨 Artwork Credits
+### 🎨 Artwork credits
 
 **Cup Nooble** – *[Sprout Lands Asset Pack](https://cupnooble.itch.io/sprout-lands-asset-pack)*
