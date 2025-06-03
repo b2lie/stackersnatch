@@ -20,7 +20,7 @@ understanding of Pushdown Automata (PDA) and turn it into something genuinely us
 might be struggling with the topic.
 
 This was also my *first-ever react project*, so I dove headfirst into learning it while building this simulation from 
-scratch. Heh.
+scratch.
 
 **My goal?**
 Help players see how a PDA works, using a game-like interface to make the concept easier to understand and way more 
