@@ -78,7 +78,7 @@ npm start
 
 <br/>
 
-## For anyone wanting to recreate something similar:
+## 👩🏻‍💻 For anyone wanting to recreate something similar:
 
 These repos really proved to be helpful for me during the learning/research process. Hope they help you out, too!
 
