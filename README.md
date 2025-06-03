@@ -27,7 +27,7 @@ way more engaging.
 
 <br/>
 
-## 👾 Features:
+## 👾 Features
 
 - [ ] Interactive Stack Visualization
 - [ ] Puzzle Levels Increasing in Difficulty [_in progress_]
@@ -35,7 +35,7 @@ way more engaging.
 
 <br/>
 
-## 😿 Note to self (and anyone reading):
+## 😿 Note to self (and anyone reading)
 
 **This is a project that was definitely rushed** and could use a bit of repolishing - juggling other assignments and 
 deadlines made it harder to finish everything I had envisioned, I'll admit :c <br/>
@@ -75,7 +75,7 @@ npm start
 
 ---
 
-## 👩🏻‍💻 For anyone wanting to recreate something similar:
+## 👩🏻‍💻 For anyone wanting to recreate something similar
 
 These repos really proved to be helpful for me during the learning/research process. Hope they help you out, too!
 
