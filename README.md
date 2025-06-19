@@ -90,7 +90,7 @@ Also would love to see how you modify this! 😸🧡
 
 ## 📜 License & credits
 
-**Copyright © 2025 b2lie**
+Built along with [Muntaha Adnan](https://github.com/bakwasbandd) and [Anumta Nadeem](https://github.com/anumtanadeem) as my teammates.
 
 Font: Mojangles by [Liam Butler (SpiffyKids)](https://fontstruct.com/fontstructors/1463562/spiffykids) - Licensed under [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/)
 
