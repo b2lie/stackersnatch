@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react';
+import confetti from 'canvas-confetti';
 import Leaderboard from './Leaderboard'
 import './WinPage.css';
 
 const closeSound = new Audio('./sounds/close.mp3');
+const winSound = new Audio('./sounds/win.mp3');
+const yaySound = new Audio('./sounds/yay.mp3');
 
 const playCloseSound = () => {
   closeSound.currentTime = 0;
   closeSound.volume = 0.2;
   closeSound.play();
+};
+
+const playWinSound = () => {
+  winSound.currentTime = 0;
+  winSound.volume = 0.2;
+  winSound.play();
+  yaySound.volume = 0.1;
+  yaySound.play();
 };
 
 const goHome = () => {
@@ -23,6 +34,16 @@ function WinPage({ score }) {
   const [playerScore, setPlayerScore] = useState(score || 0);
   const [nameInputVisible, setNameInputVisible] = useState(true);
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
+  const [imageSrc, setImageSrc] = useState(require('./sprites/win.gif'));
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const launchConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };
 
   const viewLeaderboard = () => {
     setShowLeaderboard(true);
@@ -34,11 +55,11 @@ function WinPage({ score }) {
 
   // saving score and name to leaderboard
   const saveScore = () => {
-    if (!playerName || playerScore <= 0) {
+    if (!playerName.trim() || playerScore <= 0) {
       return; // not saving empty or zero scores
     }
 
-    if (!playerName && !nameInputVisible) {
+    if (!playerName.trim()) {
       alert('please enter your name :D');
       return;
     }
@@ -61,30 +82,43 @@ function WinPage({ score }) {
   };
 
   const handleGameEnd = () => {
-    setNameInputVisible(false);
-    // setPlayerScore(100); // filler score
-    saveScore(); // save score to leaderboard
-    setScoreSubmitted(true);
+    launchConfetti();
+    playWinSound();
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setImageSrc(require('./sprites/congratulations.gif'));
+      setIsTransitioning(false);
+      setNameInputVisible(false);
+      saveScore();
+      setScoreSubmitted(true);
+      setShowLeaderboard(true); // <- add this line!
+    }, 100); // fade-out animation
   };
 
   useEffect(() => {
     setPlayerName('player 1'); // example player name
     setPlayerScore(score); // setting score
     // saveScore(); // save to leaderboard
-  }, []);
+  }, [score]);
 
   return (
     <div className="winpage-container">
       <div className="winpane-left">
-        <img src={require('./sprites/win.gif')} />
+        <img
+          src={imageSrc}
+          alt="win screen"
+          className={`win-image ${imageSrc.includes('congratulations') ? 'congrats-gif' : 'win-gif'}`}
+        />
       </div>
 
       <div className="winpane-right">
         {nameInputVisible ? (
           <>
-            <h1>you win !!!!</h1>
+            <h1>congratulations!</h1>
+            <h2>⭐ you win :D ⭐</h2>
             <input
               type="text"
+              maxLength="20"
               placeholder="enter your name"
               value={playerName}
               onChange={handleNameChange}
@@ -92,21 +126,13 @@ function WinPage({ score }) {
             <button onClick={handleGameEnd}>submit score</button>
           </>
         ) : (
-          <>
-            <h1>congratulations, {playerName}!</h1>
-            <div className="button-row">
-              {!showLeaderboard && scoreSubmitted && (
-                <button onClick={viewLeaderboard}>view leaderboard</button>
-              )}
-              <button onClick={goHome}>return home</button>
-            </div>
-          </>
+          <div className="leaderboard-container">
+            <Leaderboard />
+          </div>
         )}
-
-        {showLeaderboard && <Leaderboard />}
       </div>
     </div>
   );
 }
 
-  export default WinPage;
+export default WinPage;

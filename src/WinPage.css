@@ -1,6 +1,15 @@
+@media (max-width: 600px) {
+    .winpage-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
 h1 {
     color: rgb(131, 88, 50);
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .button-row {
@@ -10,7 +19,7 @@ h1 {
 }
 
 button {
-    color: none;
+    color: inherit;
     font-size: 12px;
     cursor: pointer;
 }
@@ -29,7 +38,7 @@ input[type="text"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 200px;
+    gap: 150px;
     padding: 40px;
     flex-wrap: wrap;
     height: 100vh;
@@ -39,7 +48,6 @@ input[type="text"] {
 }
 
 .winpane-left img {
-    max-width: 300px;
     border-radius: 20px;
     pointer-events: none;
 }
@@ -47,14 +55,53 @@ input[type="text"] {
 .winpane-right {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-width: 300px;
-    text-align: center;
     align-items: center;
+    gap: 30px;
+    text-align: center;
+    max-width: 100%;
+    max-height: max-content;
+}
+
+.winpane-right h2 {
+    color: rgb(131, 88, 50);
+    margin-bottom: 30px;
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bolder;
+    text-shadow: none;
+}
+
+.win-image {
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 1;
+    transition: all 0.2s ease;
+}
+
+.win-gif {
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+}
+
+.congrats-gif {
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+}
+
+.win-image.fade-out {
+    opacity: 0;
 }
 
 .button-row {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.leaderboard-container {
+  max-height: fit-content;
+  overflow-y: auto;
+  width: 100%;
 }
