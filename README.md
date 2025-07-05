@@ -81,6 +81,10 @@ These repos really proved to be helpful for me during the learning/research proc
 - [PDA Simulation Web Tool](https://github.com/Chaphasilor/automata)
 - [PDA Visual Sandbox](https://github.com/cheezypotatoes/Deterministic-PushDown-Automata-Project)
 
+I used [Drawio](https://www.drawio.com/) for the diagrams for each transition. Super tedious but it got the job done,
+so no complaints 🙅🏻‍♀️!
+Maybe you could try creating that from scratch too? That'd be cool!
+
 Happy PDA-simulating :D and best of luck, I know I needed it 😿.<br/>
 Also would love to see how you modify this! 😸🧡
 
