@@ -11,9 +11,8 @@
 
 ## 🤷🏻‍♀️ What's this about even?
 
-Theory of Automata (CS3005) was a course offered to me as part of my Comp. Sci. Bachelor's degree during my 4th semester.
-We were tasked with creating both a hardware and a software project to highlight how well we'd retained the topics we'd 
-covered in class. 
+Theory of Automata (CS3005) was a core course in my 4th semester of undergrad, and as part of it, we were asked to build 
+both a hardware and software project to show how well we’d grasped the concepts.
 
 Among the many options offered for the software task, this one stood out to me the most - it challenged me to take my 
 understanding of Pushdown Automata (PDA) and turn it into something genuinely useful (and fun!) for other students who 
@@ -22,8 +21,8 @@ might be struggling with the topic.
 This was also my *first-ever react project*, so I dove headfirst into learning it while building this simulation from 
 scratch.
 
-My goal was to help players see how a PDA works, using a game-like interface to make the concept easier to understand and
-way more engaging.
+My goal was to help players see how a PDA works less painfully, make the concept easier to understand and have it be **way** 
+more engaging by turning it into a gamified, hands-on simulation!
 
 <br/>
 
